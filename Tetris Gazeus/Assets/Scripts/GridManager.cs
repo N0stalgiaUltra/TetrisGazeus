@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,10 +11,10 @@ public class GridManager : MonoBehaviour
 
 
     [Header("Info da Grid")]
-    [SerializeField] private int altura = 20;
-    [SerializeField] private int largura = 10;
+    public static int altura = 20;
+    public static int largura = 10;
 
-    private static Transform[,] grid = new Transform[instance.largura, instance.altura];
+    public static Transform[,] grid = new Transform[largura, altura];
 
     private void Awake()
     {
@@ -72,19 +73,36 @@ public class GridManager : MonoBehaviour
                 return true;
         return false;
     }
-
+    /// <summary>
+    /// Determina o controle das linhas, ou seja, quando limpar e acertar a posição delas.
+    /// </summary>
     public void LineControl()
     {
-        for (int i = 0; i < instance.altura; i++)
+        for (int i = 0; i < altura; i++)
         {
             if(FullLines(i))
             {
                 CleanLines(i);
-                for (int j = instance.altura; j < instance.altura; j++) //loopa para pegar as linhas acima da deletada e descer elas
+                for (int j = altura; j < altura; j++) //loopa para pegar as linhas acima da deletada e descer elas
                     DropLines(i);
             }
                 
         }
+    }
+
+    /// <summary>
+    /// Retorna se o bloco está dentro do limite da grid
+    /// </summary>
+    /// <returns></returns>
+    public bool InBound(Vector2 position)
+    { 
+        int posx = (int)Math.Round(position.x);
+        int posy = (int)Math.Round(position.y);
+
+        if (posx >= 0 && posx < GridManager.largura && posy > 0)
+            return true;
+
+        return false;
     }
 
     #region Propriedades

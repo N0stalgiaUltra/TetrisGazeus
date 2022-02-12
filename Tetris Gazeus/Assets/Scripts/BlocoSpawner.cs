@@ -5,35 +5,36 @@ using UnityEngine;
 
 public class BlocoSpawner : MonoBehaviour
 {
+    #region Singleton
+    public static BlocoSpawner instance;
+    #endregion
+    [Header("Collections")]
     [SerializeField] private List<Bloco> avaliableBlocks = new List<Bloco>(7); // lista de blocos disponiveis
     [SerializeField] private List<Bloco> spawnBlocks; //fila de blocos a serem instanciados
     private int index;
+
+    [Header("Debug")]
     [SerializeField] public Bloco atual;
     [SerializeField] public Bloco proximo;
-    void Start()
+    void Awake()
     {
+        if (instance != null)
+            Destroy(this.gameObject);
+        else
+            instance = this;
+        
         if (spawnBlocks == null)
             spawnBlocks = new List<Bloco>();
-
-        
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.L))
-            RandomSpawn();
-    }
+    /// <summary>
+    /// Instancia um bloco aleatório e deixa salvo o proximo bloco a ser instanciado
+    /// </summary>
     public void RandomSpawn()
     {
         //int index = Random.Range(0, avaliableBlocks.Count - 1);
         //GameObject a = Instantiate(avaliableBlocks[index].gameObject, this.transform);
         //print(index);
-        // indice do primeiro
-        //Bloco atual = null;
-        //Bloco proximo = null;
-
-        //atual = 24, prox = 23, count = 25 -> count = 24
-        //prix = 22
 
         if (spawnBlocks.Count == 0)
         {

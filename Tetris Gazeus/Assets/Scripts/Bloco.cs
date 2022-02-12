@@ -14,8 +14,6 @@ public class Bloco : MonoBehaviour
     void Start()
     {
         time = 0;
-
-        
     }
 
     void Update()
@@ -23,25 +21,50 @@ public class Bloco : MonoBehaviour
         //rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         time += Time.deltaTime;
-        //dessa forma o movimento fica mais proximo do tetris de console
-        if(InBound())
+        if (time > .5f) 
         {
-            //a cada 0.5s, um bloco cai 
-            if (time > .5f)
-            {
+            if(CanMove())
+            { 
                 this.transform.position -= new Vector3(0, 1, 0);
                 time = 0;
             }
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-                transform.position += new Vector3(1, 0, 0);
-            
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
-                transform.position += new Vector3(-1, 0, 0);
-            
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-                transform.position += new Vector3(0, -1, 0);
+            else
+            {
+                transform.position += new Vector3(0, 1, 0);
+                GridManager.instance.LineControl();
+                BlocoSpawner.instance.RandomSpawn();
+                enabled = false;
+            }
         }
 
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+           if(CanMove())
+                transform.position += new Vector3(-1, 0, 0);
+           else
+                transform.position += new Vector3(1, 0, 0);
+        }
+        
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+           if(CanMove())
+                transform.position += new Vector3(1, 0, 0);
+           else
+                transform.position += new Vector3(-1, 0, 0);
+        }
+
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if(CanMove())
+                transform.position += new Vector3(0, -1, 0);
+            else
+            {
+                transform.position += new Vector3(0, 1, 0);
+                GridManager.instance.LineControl();
+                BlocoSpawner.instance.RandomSpawn();
+                enabled = false;
+            }
+        }
 
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -57,19 +80,19 @@ public class Bloco : MonoBehaviour
     {
         print("rotacionando o objeto");
     }
-
-    /// <summary>
-    /// Retorna se o bloco está dentro do limite da grid
-    /// </summary>
-    /// <returns></returns>
-    private bool InBound()
+    
+    public bool CanMove()
     {
-        foreach (Transform childTransform in gameObject.transform)
+        foreach (Transform childTransform in this.transform)
         {
-            if (childTransform.position.x >= (GridManager.instance.GridLargura / 2) || childTransform.position.x <= -(GridManager.instance.GridLargura / 2)|| childTransform.position.y < -(GridManager.instance.GridAltura/2))
-                return false;
-            
+            Vector2 childPosition = new Vector2((int)Mathf.Round(childTransform.position.x), (int)Mathf.Round(childTransform.position.y));
 
+
+            if (!GridManager.instance.InBound(childPosition))
+                return false;
+
+            if (GridManager.grid[(int)childPosition.x, (int)childPosition.y] != null) //colidiu com alguém ?
+                return false;
         }
 
         return true;
