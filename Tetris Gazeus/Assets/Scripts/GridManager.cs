@@ -10,10 +10,10 @@ public class GridManager : MonoBehaviour
 
 
     [Header("Info da Grid")]
-    [SerializeField] private int altura;
-    [SerializeField] private int largura;
+    [SerializeField] private int altura = 20;
+    [SerializeField] private int largura = 10;
 
-    public static Transform[,] grid = new Transform[instance.largura, instance.altura];
+    private static Transform[,] grid = new Transform[instance.largura, instance.altura];
 
     private void Awake()
     {
