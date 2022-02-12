@@ -47,7 +47,7 @@ public class BlocoSpawner : MonoBehaviour
 
         atual = spawnBlocks[0];
         proximo = spawnBlocks[1];
-        GameObject obj = Instantiate(atual.gameObject, this.transform);
+        GameObject obj = Instantiate(atual.gameObject, this.transform.position, Quaternion.identity);
         spawnBlocks.Remove(spawnBlocks[0]);
         
         index = Random.Range(0, avaliableBlocks.Count - 1);

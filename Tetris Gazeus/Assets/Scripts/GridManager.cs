@@ -69,9 +69,9 @@ public class GridManager : MonoBehaviour
     private bool FullLines(int alt)
     {
         for (int i = 0; i < largura; i++)
-            if (grid[largura, alt] != null)
-                return true;
-        return false;
+            if (grid[largura, alt] == null)
+                return false;
+        return true;
     }
     /// <summary>
     /// Determina o controle das linhas, ou seja, quando limpar e acertar a posição delas.
@@ -85,6 +85,7 @@ public class GridManager : MonoBehaviour
                 CleanLines(i);
                 for (int j = altura; j < altura; j++) //loopa para pegar as linhas acima da deletada e descer elas
                     DropLines(i);
+                i--;
             }
                 
         }
@@ -99,14 +100,9 @@ public class GridManager : MonoBehaviour
         int posx = (int)Math.Round(position.x);
         int posy = (int)Math.Round(position.y);
 
-        if (posx >= 0 && posx < GridManager.largura && posy > 0)
+        if (posx >= 0 && posx < largura && posy > 0)
             return true;
 
         return false;
     }
-
-    #region Propriedades
-    public int GridAltura { get => altura; }
-    public int GridLargura { get => largura; }
-    #endregion
 }
