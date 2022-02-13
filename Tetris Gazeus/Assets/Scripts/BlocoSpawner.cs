@@ -40,7 +40,7 @@ public class BlocoSpawner : MonoBehaviour
         {
             for (int i = 0; i < 5; i++)
             {
-                index = Random.Range(0, avaliableBlocks.Count - 1);
+                index = Random.Range(0, avaliableBlocks.Count);
                 spawnBlocks.Add(avaliableBlocks[index]);
             }
         }

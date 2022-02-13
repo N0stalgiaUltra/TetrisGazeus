@@ -21,61 +21,70 @@ public class Bloco : MonoBehaviour
         //rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         time += Time.deltaTime;
-        if (time > .5f) 
-        {
-            if(CanMove())
-            {
-                //AddBlock();
-                this.transform.position += new Vector3(0, -1, 0);
-                time = 0;
-            }
-            else
-            {
-                transform.position += new Vector3(0, 1, 0);
-                //GridManager.instance.LineControl();
-                BlocoSpawner.instance.RandomSpawn();
-                enabled = false;
-            }
-        }
+        //if (time > .5f) 
+        //{
+        //    if(CanMove())
+        //    {
+        //        //AddBlock();
+        //        this.transform.position += new Vector3(0, -1, 0);
+        //        time = 0;
+        //    }
+        //    else
+        //    {
+        //        //transform.position += new Vector3(0, 1, 0);
+        //        //GridManager.instance.LineControl();
+        //        AddBlock();
+        //        BlocoSpawner.instance.RandomSpawn();
+        //        enabled = false;
+        //    }
+        //}
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             transform.position += new Vector3(-1, 0, 0);
 
-            if (CanMove())
-                AddBlock();
-           else
+            if (CanMove()) { }
+            //AddBlock();
+            else
+            {
                 transform.position += new Vector3(1, 0, 0);
+            }
         }
         
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             transform.position += new Vector3(1, 0, 0);
-            if (CanMove())
-                AddBlock();
+            if (CanMove()){}
+            //AddBlock();
             else
+            {
                 transform.position += new Vector3(-1, 0, 0);
+                AddBlock();
+            }
         }
 
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || time > .5f)
         {
              transform.position += new Vector3(0, -1, 0);
 
-            if(CanMove())
-                AddBlock();
+            if(CanMove()){}
+                //AddBlock();
 
             else
             {
                 transform.position += new Vector3(0, 1, 0);
                 //GridManager.instance.LineControl();
+                AddBlock();
                 BlocoSpawner.instance.RandomSpawn();
                 enabled = false;
             }
+            time = 0;
         }
 
 
         if (Input.GetButtonDown("Rotate"))
             Rotation();
+        
 
     }
 
@@ -96,7 +105,11 @@ public class Bloco : MonoBehaviour
                 return false;
 
             if (GridManager.grid[(int)childPosition.x, (int)childPosition.y] != null && GridManager.grid[(int)childPosition.x, (int)childPosition.y].parent != transform) //colidiu com alguém ?
+            {
+                AddBlock();
                 return false;
+            }
+
 
         }
 
@@ -118,26 +131,27 @@ public class Bloco : MonoBehaviour
         return false;
     }
     /// <summary>
-    /// Salva a posição do bloco
+    /// Salva a posição do bloco na grid
     /// </summary>
     private void AddBlock()
     {
-       /* não tá funcionando */
-        
-        for (int i = 0; i < GridManager.altura; i++)
-            for (int j = 0; j < GridManager.largura; j++)
-                if (GridManager.grid[i, j] != null)
-                    if (GridManager.grid[i, j].parent == transform)
-                        GridManager.grid[i, j] = null;
-        
         //adiciona cada bloco a uma grid de transform, ou seja, adiciona ao grid a posição de um bloco
-        foreach (Transform childTransform in gameObject.transform)
+        int count = 0;
+        foreach (Transform childTransform in transform)
         {
             Vector2 childPosition = new Vector2((int)Mathf.Round(childTransform.position.x), (int)Mathf.Round(childTransform.position.y));
 
             if (GridManager.grid[(int)childPosition.x, (int)childPosition.y] == null) //checa se não há nenhum outro objeto ocupando a mesma pos
+            {
                 GridManager.grid[(int)childPosition.x, (int)childPosition.y] = childTransform;
+                print(count);
+                print($"adicionado bloco na pos {(int)childPosition.x}, {(int)childPosition.y}");
 
+            }
+            
+            count++;
+            
         }
     }
+
 }
