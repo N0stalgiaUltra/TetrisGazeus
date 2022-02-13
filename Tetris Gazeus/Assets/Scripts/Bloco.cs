@@ -18,26 +18,7 @@ public class Bloco : MonoBehaviour
 
     void Update()
     {
-        //rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
         time += Time.deltaTime;
-        //if (time > .5f) 
-        //{
-        //    if(CanMove())
-        //    {
-        //        //AddBlock();
-        //        this.transform.position += new Vector3(0, -1, 0);
-        //        time = 0;
-        //    }
-        //    else
-        //    {
-        //        //transform.position += new Vector3(0, 1, 0);
-        //        //GridManager.instance.LineControl();
-        //        AddBlock();
-        //        BlocoSpawner.instance.RandomSpawn();
-        //        enabled = false;
-        //    }
-        //}
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -55,11 +36,10 @@ public class Bloco : MonoBehaviour
         {
             transform.position += new Vector3(1, 0, 0);
             if (CanMove()){}
-            //AddBlock();
             else
             {
                 transform.position += new Vector3(-1, 0, 0);
-                AddBlock();
+                //AddBlock();
             }
         }
 
@@ -67,16 +47,12 @@ public class Bloco : MonoBehaviour
         {
              transform.position += new Vector3(0, -1, 0);
 
-            if(CanMove()){}
-                //AddBlock();
-
-            else
-            {
+            if(!CanMove()){
                 transform.position += new Vector3(0, 1, 0);
                 //GridManager.instance.LineControl();
                 AddBlock();
                 BlocoSpawner.instance.RandomSpawn();
-                enabled = false;
+
             }
             time = 0;
         }
@@ -88,12 +64,19 @@ public class Bloco : MonoBehaviour
 
     }
 
-
+    /// <summary>
+    /// Rotaciona os blocos
+    /// </summary>
+    /* Precisa de correções no centro dos blocos */
     private void Rotation()
     {
         transform.eulerAngles += new Vector3(transform.rotation.x, transform.rotation.y ,-90);
     }
     
+    /// <summary>
+    /// Checa se o bloco ainda pode se movimentar
+    /// </summary>
+    /// <returns> se pode ou não </returns>
     public bool CanMove()
     {
         foreach (Transform childTransform in transform)
@@ -106,13 +89,11 @@ public class Bloco : MonoBehaviour
 
             if (GridManager.grid[(int)childPosition.x, (int)childPosition.y] != null && GridManager.grid[(int)childPosition.x, (int)childPosition.y].parent != transform) //colidiu com alguém ?
             {
+                
                 AddBlock();
                 return false;
             }
-
-
         }
-
         return true;
     }
 
@@ -130,28 +111,39 @@ public class Bloco : MonoBehaviour
 
         return false;
     }
+    
     /// <summary>
     /// Salva a posição do bloco na grid
     /// </summary>
     private void AddBlock()
     {
         //adiciona cada bloco a uma grid de transform, ou seja, adiciona ao grid a posição de um bloco
+
         int count = 0;
-        foreach (Transform childTransform in transform)
+        while (count <= 3)
         {
-            Vector2 childPosition = new Vector2((int)Mathf.Round(childTransform.position.x), (int)Mathf.Round(childTransform.position.y));
-
-            if (GridManager.grid[(int)childPosition.x, (int)childPosition.y] == null) //checa se não há nenhum outro objeto ocupando a mesma pos
+            foreach (Transform childTransform in transform)
             {
-                GridManager.grid[(int)childPosition.x, (int)childPosition.y] = childTransform;
-                print(count);
-                print($"adicionado bloco na pos {(int)childPosition.x}, {(int)childPosition.y}");
+                Vector2 childPosition = new Vector2((int)Mathf.Round(childTransform.position.x), (int)Mathf.Round(childTransform.position.y));
 
+                if (GridManager.grid[(int)childPosition.x, (int)childPosition.y] == null)
+                {
+                    GridManager.grid[(int)childPosition.x, (int)childPosition.y] = childTransform;
+                    //print(count);
+                    //print($"adicionado bloco na pos {(int)childPosition.x}, {(int)childPosition.y}");
+
+                }
+
+                count++;
             }
-            
-            count++;
-            
         }
+        enabled = false;
     }
 
+    IEnumerator DisableBlock()
+    {
+        
+        yield return new WaitForSeconds(.5f);
+        enabled = false;
+    }
 }
