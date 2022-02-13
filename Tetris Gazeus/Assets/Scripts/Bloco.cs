@@ -70,9 +70,13 @@ public class Bloco : MonoBehaviour
     /* Precisa de correções no centro dos blocos */
     private void Rotation()
     {
-        transform.eulerAngles += new Vector3(transform.rotation.x, transform.rotation.y ,-90);
+        if(!CanMove())
+            transform.eulerAngles += new Vector3(transform.rotation.x, transform.rotation.y ,-90);
+        else
+            transform.eulerAngles += new Vector3(transform.rotation.x, transform.rotation.y, 90);
+
     }
-    
+
     /// <summary>
     /// Checa se o bloco ainda pode se movimentar
     /// </summary>
