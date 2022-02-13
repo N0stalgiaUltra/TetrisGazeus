@@ -26,7 +26,7 @@ public class Bloco : MonoBehaviour
             if(CanMove())
             {
                 //AddBlock();
-                this.transform.position -= new Vector3(0, 1, 0);
+                this.transform.position += new Vector3(0, -1, 0);
                 time = 0;
             }
             else
@@ -45,7 +45,7 @@ public class Bloco : MonoBehaviour
             if (CanMove())
                 AddBlock();
            else
-                transform.position += new Vector3(0, 0, 0);
+                transform.position += new Vector3(1, 0, 0);
         }
         
         else if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -54,7 +54,7 @@ public class Bloco : MonoBehaviour
             if (CanMove())
                 AddBlock();
             else
-                transform.position += new Vector3(0, 0, 0);
+                transform.position += new Vector3(-1, 0, 0);
         }
 
         else if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -87,15 +87,15 @@ public class Bloco : MonoBehaviour
     
     public bool CanMove()
     {
-        foreach (Transform childTransform in this.transform)
+        foreach (Transform childTransform in transform)
         {
             Vector2 childPosition = new Vector2((int)Mathf.Round(childTransform.position.x), (int)Mathf.Round(childTransform.position.y));
 
 
-            if (!GridManager.instance.InBound(childPosition))
+            if (!InBound(childPosition))
                 return false;
 
-            if (GridManager.grid[(int)childPosition.x, (int)childPosition.y] != null && GridManager.grid[(int)childPosition.x, (int)childPosition.y].parent != this.transform) //colidiu com alguém ?
+            if (GridManager.grid[(int)childPosition.x, (int)childPosition.y] != null && GridManager.grid[(int)childPosition.x, (int)childPosition.y].parent != transform) //colidiu com alguém ?
                 return false;
 
         }
@@ -103,6 +103,20 @@ public class Bloco : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Retorna se o bloco está dentro do limite da grid
+    /// </summary>
+    /// <returns></returns>
+    public bool InBound(Vector2 position)
+    {
+        int posx = (int)Math.Round(position.x);
+        int posy = (int)Math.Round(position.y);
+
+        if (posx >= 0 && posx < GridManager.largura && posy > 0)
+            return true;
+
+        return false;
+    }
     /// <summary>
     /// Salva a posição do bloco
     /// </summary>

@@ -83,7 +83,7 @@ public class GridManager : MonoBehaviour
             if(FullLines(i))
             {
                 CleanLines(i);
-                for (int j = altura; j < altura; j++) //loopa para pegar as linhas acima da deletada e descer elas
+                for (int j = altura+1; j < altura; j++) //loopa para pegar as linhas acima da deletada e descer elas
                     DropLines(i);
                 i--;
             }
@@ -91,18 +91,5 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Retorna se o bloco está dentro do limite da grid
-    /// </summary>
-    /// <returns></returns>
-    public bool InBound(Vector2 position)
-    { 
-        int posx = (int)Math.Round(position.x);
-        int posy = (int)Math.Round(position.y);
-
-        if (posx >= 0 && posx < largura && posy > 0)
-            return true;
-
-        return false;
-    }
+   
 }
