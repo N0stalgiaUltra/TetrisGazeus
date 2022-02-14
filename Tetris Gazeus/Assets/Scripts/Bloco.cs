@@ -49,7 +49,6 @@ public class Bloco : MonoBehaviour
 
             if(!CanMove()){
                 transform.position += new Vector3(0, 1, 0);
-                GridManager.instance.LineControl();
                 AddBlock();
                 BlocoSpawner.instance.RandomSpawn();
 
@@ -70,10 +69,14 @@ public class Bloco : MonoBehaviour
     /* Precisa de correções no centro dos blocos */
     private void Rotation()
     {
-        if(!CanMove())
-            transform.eulerAngles += new Vector3(transform.rotation.x, transform.rotation.y ,-90);
+        //if(!CanMove())
+        //    transform.eulerAngles += new Vector3(transform.rotation.x, transform.rotation.y ,-90);
+        //else
+        //    transform.eulerAngles += new Vector3(transform.rotation.x, transform.rotation.y, 90);
+        if (!CanMove())
+            transform.Rotate(0, 0, -90, Space.Self);
         else
-            transform.eulerAngles += new Vector3(transform.rotation.x, transform.rotation.y, 90);
+            transform.Rotate(0, 0, 90, Space.Self);
 
     }
 
@@ -93,7 +96,6 @@ public class Bloco : MonoBehaviour
 
             if (GridManager.grid[(int)childPosition.x, (int)childPosition.y] != null && GridManager.grid[(int)childPosition.x, (int)childPosition.y].parent != transform) //colidiu com alguém ?
             {
-                
                 AddBlock();
                 return false;
             }
@@ -121,8 +123,6 @@ public class Bloco : MonoBehaviour
     /// </summary>
     private void AddBlock()
     {
-        //adiciona cada bloco a uma grid de transform, ou seja, adiciona ao grid a posição de um bloco
-
         int count = 0;
         while (count <= 3)
         {
@@ -134,20 +134,14 @@ public class Bloco : MonoBehaviour
                 {
                     GridManager.grid[(int)childPosition.x, (int)childPosition.y] = childTransform;
                     //print(count);
-                    print($"adicionado bloco na pos {(int)childPosition.x}, {(int)childPosition.y}");
+                    //print($"adicionado bloco na pos {(int)childPosition.x}, {(int)childPosition.y}");
 
                 }
 
                 count++;
             }
         }
-        enabled = false;
-    }
-
-    IEnumerator DisableBlock()
-    {
-        
-        yield return new WaitForSeconds(.5f);
+        GridManager.instance.LineControl();
         enabled = false;
     }
 }

@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //BlocoSpawner.instance.RandomSpawn();
+        BlocoSpawner.instance.RandomSpawn();
 
     }
 

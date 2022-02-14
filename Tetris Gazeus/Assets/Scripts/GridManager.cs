@@ -35,12 +35,22 @@ public class GridManager : MonoBehaviour
     /// Limpa as linhas completadas, resetando-as
     /// </summary>
     /// <param name="alt"> Altura da grid a ser resetada </param>
-    public void CleanLines(int alt)
+    private void CleanLines(int alt)
     {
         for (int i = 0; i < largura; i++)
         {
             Destroy(grid[i, alt].gameObject);
             grid[i, alt] = null;
+
+            ////drop de linhas
+            //int auxAlt = alt+1; 
+            //if (grid[i, auxAlt] != null)
+            //{
+            //    print($"drop fora {i}");
+            //    grid[i, alt] = grid[i, auxAlt];
+            //    grid[i, auxAlt] = null;
+            //    grid[i, alt].position += new Vector3(0, -1, 0);
+            //}
         }
         
     }
@@ -49,17 +59,28 @@ public class GridManager : MonoBehaviour
     /// Desce as linhas acima daquela que foi resetada
     /// </summary>
     /// <param name="altura">Altura da grid acima da que foi resetada</param>
-    public void DropLines(int alt)
+    private void DropLines(int alt)
     {
-        for (int i = 0; i < largura; i++)
+        for (int j = alt; j < altura; j++)
         {
-            if(grid[i,alt] != null)
+            for (int i = 0; i < largura; i++)
             {
-                grid[i, alt - 1] = grid[i, alt];
-                grid[i, alt] = null;
-                grid[i, alt - 1].position += new Vector3(0,-1,0);
+                if (grid[i, j] != null)
+                {
+                    print($"drop lines{i}, row{j}");
+                    grid[i, j- 1] = grid[i, j];
+                    grid[i, j] = null;
+                    
+                    if(grid[i, j - 1].parent.rotation.z == 90)
+                        grid[i, j - 1].position += new Vector3(-1, 0, 0);
+                    else if(grid[i, j - 1].parent.rotation.z == -90)
+                        grid[i, j - 1].position += new Vector3(-1, 0, 0);
+                    else
+                        grid[i, j- 1].position += new Vector3(0, -1, 0); 
+                }
             }
         }
+        
     }
     /// <summary>
     /// Checa se as linhas estão preenchidas
@@ -83,8 +104,7 @@ public class GridManager : MonoBehaviour
             if (FullLines(i))
             {
                 CleanLines(i);
-                for (int j = altura + 1; j < altura; j++) //loopa para pegar as linhas acima da deletada e descer elas
-                    DropLines(i);
+                DropLines(i);
                 i--;
             }                
         }
