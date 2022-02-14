@@ -49,7 +49,7 @@ public class Bloco : MonoBehaviour
 
             if(!CanMove()){
                 transform.position += new Vector3(0, 1, 0);
-                //GridManager.instance.LineControl();
+                GridManager.instance.LineControl();
                 AddBlock();
                 BlocoSpawner.instance.RandomSpawn();
 
@@ -134,7 +134,7 @@ public class Bloco : MonoBehaviour
                 {
                     GridManager.grid[(int)childPosition.x, (int)childPosition.y] = childTransform;
                     //print(count);
-                    //print($"adicionado bloco na pos {(int)childPosition.x}, {(int)childPosition.y}");
+                    print($"adicionado bloco na pos {(int)childPosition.x}, {(int)childPosition.y}");
 
                 }
 

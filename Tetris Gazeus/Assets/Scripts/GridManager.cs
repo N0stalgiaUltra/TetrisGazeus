@@ -39,8 +39,8 @@ public class GridManager : MonoBehaviour
     {
         for (int i = 0; i < largura; i++)
         {
-            Destroy(grid[largura, alt].gameObject);
-            grid[largura, alt] = null;
+            Destroy(grid[i, alt].gameObject);
+            grid[i, alt] = null;
         }
         
     }
@@ -53,11 +53,11 @@ public class GridManager : MonoBehaviour
     {
         for (int i = 0; i < largura; i++)
         {
-            if(grid[largura,alt] != null)
+            if(grid[i,alt] != null)
             {
-                grid[largura, alt - 1] = grid[largura, alt];
-                grid[largura, alt] = null;
-                grid[largura, alt - 1].position += new Vector3(0,-1,0);
+                grid[i, alt - 1] = grid[i, alt];
+                grid[i, alt] = null;
+                grid[i, alt - 1].position += new Vector3(0,-1,0);
             }
         }
     }
@@ -69,9 +69,9 @@ public class GridManager : MonoBehaviour
     private bool FullLines(int alt)
     {
         for (int i = 0; i < largura; i++)
-            if (grid[largura, alt] == null)
+            if (grid[i, alt] == null)
                 return false;
-        return true;
+         return true;
     }
     /// <summary>
     /// Determina o controle das linhas, ou seja, quando limpar e acertar a posição delas.
@@ -80,14 +80,13 @@ public class GridManager : MonoBehaviour
     {
         for (int i = 0; i < altura; i++)
         {
-            if(FullLines(i))
+            if (FullLines(i))
             {
                 CleanLines(i);
-                for (int j = altura+1; j < altura; j++) //loopa para pegar as linhas acima da deletada e descer elas
+                for (int j = altura + 1; j < altura; j++) //loopa para pegar as linhas acima da deletada e descer elas
                     DropLines(i);
                 i--;
-            }
-                
+            }                
         }
     }
 
