@@ -9,11 +9,16 @@ public class Bloco : MonoBehaviour
     [Header("Referencias")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float time;
-    private static Transform[,] grid;
 
     void Start()
     {
+        if(!enabled)
+            enabled = true;
+        
         time = 0;
+        if (!CanMove())
+            GameManager.instance.GameOver();
+            //fim de jogo
     }
 
     void Update()
@@ -141,6 +146,7 @@ public class Bloco : MonoBehaviour
                 count++;
             }
         }
+        GameManager.instance.score += 20;
         GridManager.instance.LineControl();
         enabled = false;
     }

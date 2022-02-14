@@ -41,16 +41,7 @@ public class GridManager : MonoBehaviour
         {
             Destroy(grid[i, alt].gameObject);
             grid[i, alt] = null;
-
-            ////drop de linhas
-            //int auxAlt = alt+1; 
-            //if (grid[i, auxAlt] != null)
-            //{
-            //    print($"drop fora {i}");
-            //    grid[i, alt] = grid[i, auxAlt];
-            //    grid[i, auxAlt] = null;
-            //    grid[i, alt].position += new Vector3(0, -1, 0);
-            //}
+            GameManager.instance.score += 200;
         }
         
     }
@@ -71,9 +62,7 @@ public class GridManager : MonoBehaviour
                     grid[i, j- 1] = grid[i, j];
                     grid[i, j] = null;
                     
-                    if(grid[i, j - 1].parent.rotation.z == 90)
-                        grid[i, j - 1].position += new Vector3(-1, 0, 0);
-                    else if(grid[i, j - 1].parent.rotation.z == -90)
+                    if(grid[i, j - 1].parent.rotation.z == 90 || grid[i, j - 1].parent.rotation.z == -90)
                         grid[i, j - 1].position += new Vector3(-1, 0, 0);
                     else
                         grid[i, j- 1].position += new Vector3(0, -1, 0); 

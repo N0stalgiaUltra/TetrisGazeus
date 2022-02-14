@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6497194309366286257}
   - component: {fileID: 978850104555776896}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ZBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8565245872837980651}
   - component: {fileID: 8565245872837980648}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8565245873166447064}
   - component: {fileID: 8565245873166447065}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8565245874106752782}
   - component: {fileID: 8565245874106752783}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,7 +302,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8565245874125478064}
   - component: {fileID: 8565245874125478065}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
