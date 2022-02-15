@@ -3,9 +3,9 @@
 Teste para a vaga de Desenvolvedor C# Jr na Gazeus Games. 
 
 Instruções para jogar:
--1- Acessar a pasta TetrisGazeus/Builds
--2- Para cada OS, existe uma build, apesar de a unica build testada ter sido a de Windows
--3- Clicar no executável
+- 1- Acessar a pasta TetrisGazeus/Builds
+- 2- Para cada OS, existe uma build, apesar de a unica build testada ter sido a de Windows
+- 3- Clicar no executável
 
 Instuções durante o jogo:
 - Setas movem os blocos para direita, esquerda e para baixo
