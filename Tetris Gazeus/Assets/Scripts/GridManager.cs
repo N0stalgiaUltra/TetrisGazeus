@@ -23,13 +23,8 @@ public class GridManager : MonoBehaviour
             Destroy(this.gameObject);
         else
             instance = this;
-
-
     }
-    
-    private void Update()
-    {
-    }
+
 
     /// <summary>
     /// Limpa as linhas completadas, resetando-as

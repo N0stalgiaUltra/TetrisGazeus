@@ -70,11 +70,14 @@ public class BlocoSpawner : MonoBehaviour
         spawnBlocks.Add(avaliableBlocks[index]);
     }
 
+    /// <summary>
+    /// Spawna o proximo bloco para mostrar ao jogador qual será o tipo de bloco que virá
+    /// </summary>
     public void NextBlockSpawn()
     {
         GameObject a = Instantiate(proximo.gameObject, nextBlock.transform);
-        a.transform.position += new Vector3(0, 0, -1);
-        a.transform.localScale = new Vector3(10, 10, 10);
+        a.transform.localPosition = new Vector3(0, 0, -1);
+        a.transform.localScale = new Vector3(10, 10, 10);               
         a.GetComponent<Bloco>().enabled = false;
         nextObjects.Add(a);
     }

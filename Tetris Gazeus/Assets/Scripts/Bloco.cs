@@ -71,7 +71,6 @@ public class Bloco : MonoBehaviour
     /// <summary>
     /// Rotaciona os blocos
     /// </summary>
-    /* Precisa de correções no centro dos blocos */
     private void Rotation()
     {
         //if(!CanMove())
