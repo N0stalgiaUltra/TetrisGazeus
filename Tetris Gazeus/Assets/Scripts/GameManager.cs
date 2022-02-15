@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI hsUI;
     [SerializeField] private Canvas GameOverUI;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+
     void Awake()
     {
         if (instance != null)
@@ -43,7 +46,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void GameOver()
     {
-        print("game over");
+        audioSource.Stop();
         ScoreControl();
         GameOverUI.enabled = true;
         Time.timeScale = 0;
@@ -57,6 +60,7 @@ public class GameManager : MonoBehaviour
         hsUI.text = $"Highscore:{PlayerPrefs.GetInt("HighScore")}";
         score = 0;
         Time.timeScale = 1;
+        audioSource.Play();
         BlocoSpawner.instance.RandomSpawn();
     }
 
